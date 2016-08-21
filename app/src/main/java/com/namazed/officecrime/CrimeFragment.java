@@ -125,6 +125,13 @@ public class CrimeFragment extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+
+        CrimeLab.get(getActivity()).updateCrime(mCrime);
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_crime, menu);
@@ -134,7 +141,8 @@ public class CrimeFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_item_delete_crime:
-                CrimeLab.get(getActivity()).deleteCrime(mCrime);
+                UUID crimeId = mCrime.getId();
+                CrimeLab.get(getActivity()).deleteCrime(crimeId);
                 getActivity().finish();
                 return true;
             default:

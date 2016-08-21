@@ -3,7 +3,6 @@ package com.namazed.officecrime;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,7 +33,7 @@ public class CrimeListFragment extends Fragment {
     private boolean mSubtitleVisible;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
@@ -68,6 +67,7 @@ public class CrimeListFragment extends Fragment {
             mAdapter = new CrimeAdapter(crimes);
             mCrimeRecyclerView.setAdapter(mAdapter);
         } else {
+            mAdapter.setCrimes(crimes);
             mAdapter.notifyDataSetChanged();
         }
 
@@ -144,6 +144,7 @@ public class CrimeListFragment extends Fragment {
         }
 
         AppCompatActivity activity = (AppCompatActivity) getActivity();
+        //noinspection ConstantConditions
         activity.getSupportActionBar().setSubtitle(subtitle);
     }
 
@@ -213,6 +214,10 @@ public class CrimeListFragment extends Fragment {
         @Override
         public int getItemCount() {
             return mCrimes.size();
+        }
+
+        public void setCrimes(List<Crime> crimes) {
+            mCrimes = crimes;
         }
     }
 }
